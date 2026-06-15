@@ -1,23 +1,24 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block content %}
-
-<div class="form-container">
-
-    <h1>Register</h1>
-
-    <form>
-
-        <input type="text" placeholder="Username">
-
-        <input type="email" placeholder="Email">
-
-        <input type="password" placeholder="Password">
-
-        <button>Register</button>
-
-    </form>
-
+<div class="auth-single-wrapper">
+    <div class="auth-box center-box">
+        <h2>Create New Account</h2>
+        <form action="{{ url_for('signup') }}" method="POST">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" required placeholder="Choose a unique username">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" required placeholder="yourname@example.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="Minimum 6 characters">
+            </div>
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+        <p class="auth-redirect-text">Pehle se account hai? <a href="{{ url_for('index') }}">Login karein</a></p>
+    </div>
 </div>
-
 {% endblock %}

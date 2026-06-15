@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeType - Cyberpunk Typing Arena</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🚀 CodeType</div>
+        <div class="nav-links" style="display: flex; align-items: center; gap: 15px;">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('practice') }}">⚡ Practice</a>
+                <a href="{{ url_for('dashboard') }}">📊 Dashboard</a>
+                <a href="{{ url_for('profile') }}">👤 Profile ({{ current_user.username }})</a>
+                <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+            {% else %}
+                <a href="{{ url_for('index') }}">Login</a>
+                <a href="{{ url_for('register_page') }}">Register</a>
+            {% endif %}
+            
+            <button id="theme-toggle" style="background: none; border: none; font-size: 20px; cursor: pointer; padding: 0; margin-left: 10px;">🌓</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        // Pehle se saved theme check karo
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+        
+        toggleBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <h2>Welcome to your Cyber Dashboard, {{ current_user.username }}!</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Tests Given</h3>
+            <p class="big-number">{{ total_tests }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Average WPM</h3>
+            <p class="big-number">{{ avg_wpm }}<span class="unit">wpm</span></p>
+        </div>
+        <div class="stat-card">
+            <h3>Average Accuracy</h3>
+            <p class="big-number">{{ avg_acc }}<span class="unit">%</span></p>
+        </div>
+    </div>
+
+    <h3>📜 Performance History</h3>
+    {% if results %}
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Test ID</th>
+                <th>Language</th>
+                <th>Speed (WPM)</th>
+                <th>Accuracy</th>
+                <th>Errors</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>#{{ result.id }}</td>
+                <td style="text-transform: uppercase; color: #00f2fe;">{{ result.language }}</td>
+                <td style="font-weight: bold; color: #4ade80;">{{ result.wpm }} WPM</td>
+                <td>{{ result.accuracy }}%</td>
+                <td style="color: #f87171;">{{ result.errors }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p style="color: #94a3b8;">Abhi tak koi test data nahi hai. <a href="{{ url_for('practice') }}" style="color: #00f2fe;">Pehla test shuru karein!</a></p>
+    {% endif %}
+</div>
+{% endblock %}

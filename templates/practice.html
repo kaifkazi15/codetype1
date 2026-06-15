@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="typing-arena-wrapper">
+    <div class="selector-bar" style="display: flex; gap: 20px;">
+        <div>
+            <label for="lang-select">Choose Language: </label>
+            <select id="lang-select">
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+                <option value="cpp">C++</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="mode-select">Test Mode: </label>
+            <select id="mode-select">
+                <option value="60">1 Minute</option>
+                <option value="120">2 Minutes</option>
+                <option value="300">5 Minutes</option>
+                <option value="600">10 Minutes</option>
+                <option value="1200">20 Minutes</option>
+                <option value="notimer">No Timer (Infinite)</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="logic-box" style="background: #1e293b; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #00f2fe; font-size: 15px; color: #94a3b8;">
+        <strong>💡 Snippet Logic:</strong> <span id="logic-text">Loading logic...</span>
+    </div>
+
+    <div class="live-stats">
+        <div id="timer-container">Time: <span id="timer" class="stat-highlight">60s</span></div>
+        <div>WPM: <span id="wpm" class="stat-highlight">0</span></div>
+        <div>Accuracy: <span id="accuracy" class="stat-highlight">100</span>%</div>
+    </div>
+
+    <div id="code-display" class="code-editor-box"></div>
+
+    <textarea id="code-input" placeholder="Start typing the code snippet here..." autofocus></textarea>
+
+    <button id="restart-btn" class="btn-secondary" style="width: auto; padding: 10px 20px;">🔄 Next Random Code</button>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
