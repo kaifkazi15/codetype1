@@ -1,17 +1,51 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block content %}
-
-<div class="page">
-
-    <h1>Leaderboard</h1>
-
-    <div class="card">
-
-        <h3>1. Kaif - 100 Points</h3>
-
+<div class="dashboard-container">
+    <h2>Welcome back, {{ current_user.username }}! 📊</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Tests</h3>
+            <p class="big-number">{{ total_tests }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Avg Speed</h3>
+            <p class="big-number">{{ avg_wpm }} <span class="unit">WPM</span></p>
+        </div>
+        <div class="stat-card">
+            <h3>Avg Accuracy</h3>
+            <p class="big-number">{{ avg_acc }}<span class="unit">%</span></p>
+        </div>
     </div>
 
+    <h3>Your Recent Performance History</h3>
+    <div class="table-wrapper">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Test ID</th>
+                    <th>Language</th>
+                    <th>Speed (WPM)</th>
+                    <th>Accuracy</th>
+                    <th>Errors</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in results[::-1] %}
+                <tr>
+                    <td>#{{ res.id }}</td>
+                    <td><span class="lang-badge">{{ res.language.upper() }}</span></td>
+                    <td><strong>{{ res.wpm }}</strong></td>
+                    <td>{{ res.accuracy }}%</td>
+                    <td>{{ res.errors }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #aaa;">Abhi tak aapne koi test nahi diya hai.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
 {% endblock %}
